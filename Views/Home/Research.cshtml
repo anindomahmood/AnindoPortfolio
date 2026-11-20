@@ -1,0 +1,146 @@
+@model ResearchViewModel
+@{
+    ViewData["Title"] = "Heart Disease Study";
+    var inv = CultureInfo.InvariantCulture;
+    var firstStep = Model.Steps[0];
+}
+
+<div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+        <a asp-controller="Home" asp-action="Index" class="back-link">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+            Back to portfolio
+        </a>
+        <span class="mono muted small">research / heart-disease-ml</span>
+    </nav>
+
+    <!-- TITLE -->
+    <section class="study-head">
+        <div class="study-title-wrap">
+            <div class="tag-row">
+                <span class="badge badge-revision">Under revision</span>
+                <span class="tag">Healthcare prediction</span>
+                <span class="tag">Sept 2026</span>
+            </div>
+            <h1 class="study-title">A Comparative Study of Machine Learning Algorithms for Early Detection of Heart Disease</h1>
+            <p class="lead">Which classifier catches heart disease most reliably from routine clinical data? This study compares a linear baseline, a bagged ensemble and two gradient-boosting models on public datasets.</p>
+        </div>
+        <div class="kpi-grid">
+            <div class="kpi"><div class="kpi-num accent">90.76%</div><div class="muted small">best accuracy (CatBoost)</div></div>
+            <div class="kpi"><div class="kpi-num">4</div><div class="muted small">algorithms compared</div></div>
+            <div class="kpi"><div class="kpi-num">2</div><div class="muted small">data sources: UCI + Kaggle</div></div>
+            <div class="kpi"><div class="kpi-num amber">+2.17</div><div class="muted small">points over baseline</div></div>
+        </div>
+    </section>
+
+    <!-- PIPELINE -->
+    <section class="section">
+        <div class="section-kicker">Method · click a stage</div>
+        <div class="step-grid" role="group" aria-label="Pipeline stages">
+            @foreach (var st in Model.Steps)
+            {
+                var active = st.Id == firstStep.Id;
+                <button type="button" class="step @(active ? "is-active" : "")" aria-pressed="@(active ? "true" : "false")" data-step="@st.Id">
+                    <span class="mono step-num">@st.Number</span>
+                    <span class="step-label">@st.Label</span>
+                </button>
+            }
+        </div>
+        @foreach (var st in Model.Steps)
+        {
+            <div class="panel step-panel" data-step-panel="@st.Id" hidden="@(st.Id != firstStep.Id)">
+                <div>
+                    <h2 class="h4">@st.Label</h2>
+                    <p class="body">@st.Body</p>
+                </div>
+                <ul class="check-list">
+                    @foreach (var pt in st.Points)
+                    {
+                        <li>
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                            <span>@pt</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </section>
+
+    <!-- RESULTS -->
+    <section class="section two-col">
+        <div class="stack">
+            <div class="section-kicker">Results</div>
+            <h2 class="h3">Compare every model against a baseline you choose</h2>
+            <p class="body">Pick the reference model; the table recomputes each model's gain or loss in accuracy points.</p>
+            <div class="chip-row" role="group" aria-label="Baseline model" id="baselineGroup">
+                @foreach (var m in Model.Models)
+                {
+                    var active = m.Id == "lr";
+                    <button type="button" class="chip @(active ? "is-active" : "")" aria-pressed="@(active ? "true" : "false")" data-base="@m.Id">@m.Name</button>
+                }
+            </div>
+            <p class="muted xsmall">Accuracy from experiments so far. Final figures may change after revision.</p>
+        </div>
+        <div class="table-wrap">
+            <table class="results-table">
+                <caption class="mono muted xsmall">Baseline: <span id="baseName">Logistic Regression</span></caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Model</th>
+                        <th scope="col">Family</th>
+                        <th scope="col" class="num">Accuracy</th>
+                        <th scope="col" class="num">Δ vs baseline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var m in Model.Models)
+                    {
+                        <tr data-id="@m.Id" data-name="@m.Name" data-acc="@m.Accuracy.ToString("0.00", inv)">
+                            <th scope="row">@m.Name</th>
+                            <td class="muted">@m.Family</td>
+                            <td class="num mono">@m.Accuracy.ToString("0.00", inv)%</td>
+                            <td class="num mono delta">–</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- TAKEAWAYS + CITE -->
+    <section class="section two-col">
+        <div class="panel plain">
+            <h2 class="h4">What the numbers say</h2>
+            <p class="body">Gradient boosting beat both the linear and bagged models. CatBoost led XGBoost by 1.63 points, and Logistic Regression and Random Forest tied at 88.59%, so a simple linear model stays a strong, interpretable reference for clinical use.</p>
+            <p class="muted small">[ADD: dataset sizes, train/test split, and additional metrics such as precision, recall, F1 and ROC-AUC once the revision is final.]</p>
+        </div>
+        <div class="panel">
+            <div class="meta-row spread">
+                <h2 class="h4">Cite this work</h2>
+                <button type="button" class="btn btn-outline btn-sm" id="copyBib">Copy BibTeX</button>
+            </div>
+            <pre class="bibtex" id="bibtex">@Model.BibTex</pre>
+        </div>
+    </section>
+
+    <!-- RELATED -->
+    <section class="section">
+        <div class="section-kicker">Related work</div>
+        <div class="two-col">
+            <a class="card related" asp-controller="Home" asp-action="Index" asp-fragment="research">
+                <span class="mono xsmall related-ongoing">Ongoing proposal · Oct 2026</span>
+                <span class="related-title">Maternal Health Risk Prediction with optimised, cross-validated classifiers</span>
+                <span class="body small">KNN, RF, SVM and XGBoost on 6,103 records, explained with SHAP.</span>
+            </a>
+            <a class="card related" href="https://github.com/anindomahmood/MachineLearning" target="_blank" rel="noopener">
+                <span class="mono xsmall amber">Code · Google Colab</span>
+                <span class="related-title">Machine Learning Notebooks</span>
+                <span class="body small">Heart-disease prediction and other ML experiments on GitHub.</span>
+            </a>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/research.js" asp-append-version="true"></script>
+}
