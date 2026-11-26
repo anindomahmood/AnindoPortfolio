@@ -48,6 +48,14 @@ public class HomeController : Controller
         return View(model);
     }
 
+    // GET /workspace  (private page: not linked in the menu, hidden from search engines)
+    [HttpGet("workspace")]
+    public IActionResult Workspace()
+    {
+        Response.Headers["X-Robots-Tag"] = "noindex, nofollow";
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

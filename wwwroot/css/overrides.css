@@ -18,3 +18,8 @@
     [data-theme="light"] .nav-links { background: #FFFFFF; }
     [data-theme="dark"]  .nav-links { background: #0F172A; }
 }
+
+/* Footer: small workspace icon next to the copyright */
+.footer-left { display: inline-flex; align-items: center; gap: 10px; }
+.footer-ws { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; color: var(--muted); opacity: .7; transition: opacity .2s, color .2s, border-color .2s; }
+.footer-ws:hover { opacity: 1; color: var(--accent); border-color: var(--accent-line); }
