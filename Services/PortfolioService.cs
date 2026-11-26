@@ -109,7 +109,7 @@ public class PortfolioService
 
     public IReadOnlyList<string> RobotFacts { get; } =
     [
-        "Hi! I’m R-01, Anindo’s research bot.",
+        "Hi! I am Eco, Anindo’s research bot.",
         "CatBoost hit 90.76% on heart disease.",
         "EcoSense was accepted at IEEE ICRPSET-2026.",
         "6,103 maternal-health records, explained with SHAP.",

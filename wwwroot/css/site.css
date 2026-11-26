@@ -376,3 +376,62 @@ img, svg { max-width: 100%; }
     .robot-bubble { white-space: normal; max-width: 220px; }
     .nav-links { padding: 8px 20px 20px; }
 }
+
+/* =========================================================
+   White theme: soft "environment" amber glow + warm gradient
+   (dark theme is not affected)
+   ========================================================= */
+[data-theme="light"] {
+    --surface: rgba(255, 255, 255, 0.72);
+    --nav-bg: rgba(255, 254, 251, 0.82);
+    --glow-amber: rgba(245, 158, 11, 0.09);
+    --glow-amber-soft: rgba(251, 191, 36, 0.06);
+    --glow-teal: rgba(20, 184, 166, 0.04);
+}
+
+[data-theme="light"] body {
+    background:
+        radial-gradient(ellipse 60% 45% at 85% 0%, var(--glow-amber), transparent 70%),
+        radial-gradient(ellipse 45% 40% at 0% 35%, var(--glow-amber-soft), transparent 70%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, var(--glow-teal), transparent 70%),
+        linear-gradient(180deg, #FFFCF7 0%, #FFFFFF 40%, #FFFEFB 75%, #FFFBF4 100%);
+    background-attachment: fixed;
+}
+
+/* Two slow-drifting glow orbs behind the content */
+[data-theme="light"] body::before,
+[data-theme="light"] body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(100px);
+}
+[data-theme="light"] body::before {
+    width: 520px; height: 520px;
+    top: -140px; right: -120px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
+    animation: glowDriftA 18s ease-in-out infinite alternate;
+}
+[data-theme="light"] body::after {
+    width: 460px; height: 460px;
+    bottom: -160px; left: -140px;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.10), transparent 70%);
+    animation: glowDriftB 22s ease-in-out infinite alternate;
+}
+
+/* Cards pick up a hint of the warm glow */
+[data-theme="light"] .card,
+[data-theme="light"] .panel,
+[data-theme="light"] .skill-card,
+[data-theme="light"] .kpi {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+[data-theme="light"] .card:hover { box-shadow: 0 12px 32px -18px rgba(180, 83, 9, 0.12); }
+[data-theme="light"] .robot-stage { background-color: rgba(255, 252, 247, 0.85); }
+[data-theme="light"] .results { background: linear-gradient(180deg, rgba(255, 253, 249, 0.85), rgba(255, 255, 255, 0.7)); }
+
+@keyframes glowDriftA { from { transform: translate(0, 0) scale(1); } to { transform: translate(-80px, 60px) scale(1.15); } }
+@keyframes glowDriftB { from { transform: translate(0, 0) scale(1); } to { transform: translate(90px, -50px) scale(1.1); } }

@@ -29,8 +29,14 @@
     <header class="site-header">
         <nav class="nav container" aria-label="Main">
             <a class="brand" asp-controller="Home" asp-action="Index">
-                <span class="brand-mark">AM</span>
-                <span class="brand-name">Anindo Mahmood</span>
+                <span class="brand-mark" aria-hidden="true" style="border: 0; border-radius: 50%; width: 42px; height: 42px;">
+                    <svg width="42" height="42" viewBox="0 0 120 120" fill="none">
+                        <circle cx="60" cy="60" r="54" stroke="currentColor" stroke-width="5" />
+                        <path d="M36 90 L60 28 L84 90" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M18 68 H42 L49 56 L56 80 L63 60 L67 68 H102" style="stroke: var(--amber)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                <span class="brand-name" style="font-size: 21px;">Anindo Mahmood</span>
             </a>
 
             <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">

@@ -1,5 +1,5 @@
 // =========================================================
-// robot.js: R-01, the draggable research robot.
+// robot.js: Eco, the draggable research robot.
 //  - drag it with the mouse (or finger) inside its stage
 //  - its eyes follow your cursor
 //  - click it (without dragging) for the next research fact
@@ -20,7 +20,7 @@
     const coords = document.getElementById('robotCoords');
     const glow = document.getElementById('robotGlow');
 
-    const facts = window.robotFacts || ['Hi! I’m R-01.'];
+    const facts = window.robotFacts || ['Hi! I am Eco.'];
     const MOUTH_NORMAL = 'M90 95 Q100 100 110 95';
     const MOUTH_HAPPY = 'M88 96 Q100 104 112 96';
 
@@ -133,7 +133,7 @@
         void arm.getBoundingClientRect();    // restart the CSS animation
         arm.classList.add('waving');
         mouth.setAttribute('d', MOUTH_HAPPY);
-        say('Hello there! Welcome to my lab.');
+        say('Hello! I am Eco. Welcome to my lab.');
         setTimeout(function () {
             waving = false;
             arm.classList.remove('waving');
