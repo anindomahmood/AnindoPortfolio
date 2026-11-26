@@ -1,0 +1,20 @@
+/* =========================================================
+   overrides.css: small fixes loaded after site.css
+   ========================================================= */
+
+/* Phone / tablet: solid header and solid drop-down menu
+   (no see-through effect behind the menu links) */
+@media (max-width: 960px) {
+    .site-header {
+        background: var(--bg);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+    .nav-links {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: 0 18px 32px -14px rgba(15, 23, 42, 0.35);
+    }
+    [data-theme="light"] .nav-links { background: #FFFFFF; }
+    [data-theme="dark"]  .nav-links { background: #0F172A; }
+}
